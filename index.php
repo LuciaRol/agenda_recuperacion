@@ -15,9 +15,13 @@
 
         use Controllers\FrontController;
         FrontController::main();
+
+        use Lib\BaseDatos;
+        $db = new BaseDatos();
     ?>
 
-
+    <hr>
+    <h2>HE CONECTADO CON LA BASE DE DATOS</h2>
     <hr>
     <h2>Elige una opción para continuar</h2>
     <a href="http://localhost/php/mvc/agenda_mvc/index.php?controller=Contacto&action=mostrarTodos">Mostrar todos mis contactos</a>

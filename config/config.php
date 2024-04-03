@@ -1,5 +1,12 @@
 <?php
 
+define('SERVIDOR', 'localhost');
+define('USUARIO', 'root');
+define('PASS', '');
+define('BASE_DATOS', 'agenda_recuperacion');
+
+
+
 // constante con el dominio de mi proyecto
 define("BASE_URL", "https://localhost/php/mvc/agenda_mvc/");
 
