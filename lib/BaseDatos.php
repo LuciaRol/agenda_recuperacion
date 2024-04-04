@@ -4,28 +4,39 @@ namespace Lib;
 use PDO;
 use PDOException;
 
-class BaseDatos extends PDO{
+class BaseDatos {
 
     private PDO $conexion;
     private mixed $resultado;
 
     public function __construct(
-        private $tipo_de_base = 'mysql',
         private string $servidor = SERVIDOR,
         private string $usuario = USUARIO,
         private string $pass = PASS,
-        private string $base_datos = BASE_DATOS){
+        private string $base_datos = BASE_DATOS
+        ) {
+            $this->conexion = $this->conectar();
+        }
 
-
+    private function conectar(): PDO{
         try{
             $opciones = array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
                 PDO::MYSQL_ATTR_FOUND_ROWS => true,
             );
-            parent::__construct("{$this->tipo_de_base}:dbname={$this->base_datos};host={$this->servidor}",$this->usuario,$this->pass,$opciones);
+            $conexion = new PDO("mysql:host={$this->servidor};dbname={$this->base_datos}",$this->usuario,$this->pass,$opciones);
+            return $conexion;
         }catch(PDOException $e){
             echo "Ha surgido un error y no se puede conectar a la base de datos. Detalle: " . $e->getMessage();
             exit;
         }
+    }
+
+    public function consulta (string $consultaSQL): void{
+        $this->resultado = $this->conexion->query($consultaSQL);
+    }
+
+    public function extraer_registro() : mixed{
+        return ($fila = $this->resultado->fetch(PDO::FETCH_ASSOC))? $fila:false;
     }
 }
