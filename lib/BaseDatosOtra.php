@@ -4,7 +4,7 @@ namespace Lib;
 use PDO;
 use PDOException;
 
-class BaseDatos {
+class BaseDatosOtra extends PDO{
 
     private PDO $conexion; //si no pongo clase PDO se lo traga también
     private mixed $resultado;

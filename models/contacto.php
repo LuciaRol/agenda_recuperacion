@@ -5,15 +5,22 @@
 
 
 namespace Models;
+use Lib\BaseDatosOtra;
+use PDO;
+use PDOException;
 
-class Contacto {
-    private $id;
-    private $nombre;
-    private $apellidos;
-    private $correo;
-    private $direccion;
-    private $telefono;
-    private $fecha_nacimiento;
+class Contacto extends BaseDatosOtra{
+    private string $id;
+    private string $nombre;
+    private string $apellidos;
+    private string $correo;
+    private string $direccion;
+    private string $telefono;
+    private ?string $fecha_nacimiento;
+
+    public function __construct(){
+        parent::__construct();
+    }
 
     // id
     public function getId() {
@@ -71,10 +78,23 @@ class Contacto {
         $this->fecha_nacimiento = $fecha_nacimiento;
     }
 
-    // función para mostrar los contactos
+    // función para mostrar todos los contactos
     public function conseguirTodos() {
         return "Mostraremos todos los contactos de nuestra agenda";
     }
+
+    // sentencias preparadas para que no haya inyección de codigo de consultas sql
+    public function getAll(){
+        try{
+            $stm = $this->prepare("SELECT * FROM contactos");
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 
 

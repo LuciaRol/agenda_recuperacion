@@ -21,18 +21,10 @@
     <h2>He conectado con la base de datos</h2>
 
     <?php
-        try{
-            $db->consulta("SELECT * FROM contactos");
-
-            while($fila = $db->extraer_registro()){
-                foreach($fila as $campo => $valor){
-                    echo "$campo: $valor <br><br>";
-                }
-            }
-        }
-        catch(PDOException $err){
-            die("Error: ejecutando consulta SQL");
-        }
+       use Models\Contacto;
+       $contact = new Contacto();
+       $result = $contact->getAll();
+       print_r($result);
     ?>
 
   
